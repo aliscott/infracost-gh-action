@@ -1,3 +1,4 @@
+
 name: Infracost
 description: Show cloud cost estimate changes for Terraform in pull requests.
 author: infracost
@@ -31,10 +32,6 @@ inputs:
       - `'{"percentage_threshold": 0}'`: absolute percentage threshold that triggers a comment. For example, set to 1 to post a comment if the cost estimate changes by more than plus or minus 1%.
     required: false
     default: '{"has_diff": true}'
-  docker_image:
-    description: The Infracost docker image to use. Use a specific version instead of latest if locking is preferred.
-    required: false
-    default: infracost/infracost:latest
 outputs:
   total_monthly_cost:
     description: The new total monthly cost estimate.
@@ -42,7 +39,7 @@ outputs:
     description: The past total monthly cost estimate.
 runs:
   using: docker
-  image: docker://${{ inputs.docker_image }}
+  image: docker://infracost/infracost:test # Use a specific version instead of latest if locking is preferred
   args:
     - ${{ inputs.path }}
     - ${{ inputs.terraform_plan_flags }}
